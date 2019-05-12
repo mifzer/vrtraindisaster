@@ -5,6 +5,8 @@ using UnityEngine;
 public class InputAccelerometer : MonoBehaviour
 {
 
+    private float speed;
+
     // Update is called once per frame
     void Update()
     {
