@@ -14,6 +14,10 @@ namespace EasySurvivalScripts
 
     public class PlayerMovement : MonoBehaviour
     {
+        [Header("Shake Properties")]
+        [SerializeField] private float _ShakeThreshold = 2;
+        // [SerializeField] private float _ShakeOffset;
+
         public PlayerStates playerStates;
 
         [Header("Inputs")]
@@ -72,7 +76,18 @@ namespace EasySurvivalScripts
         void HandlePlayerControls()
         {
             float hInput = Input.GetAxisRaw(HorizontalInput);
-            float vInput = Input.GetAxisRaw(VerticalInput);
+            // float vInput = Input.GetAxisRaw(VerticalInput);
+            // Debug.Log(vInput);
+
+#region input accelerometer
+
+            float vInput = 0;
+            
+            if(Input.acceleration.sqrMagnitude > _ShakeThreshold){
+                vInput = 1;
+            }
+
+#endregion
 
             Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * vInput : Vector3.zero;
             Vector3 rightMovement = characterController.isGrounded == true ? transform.right * hInput : Vector3.zero;
