@@ -30,7 +30,7 @@ namespace EasySurvivalScripts
         [Range(1f,15f)]
         public float walkSpeed;
         [Range(1f,15f)]
-        public float runSpeed;
+         public float runSpeed;
         [Range(1f,15f)]
         public float JumpForce;
         public Transform FootLocation;
