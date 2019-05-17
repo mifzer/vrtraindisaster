@@ -17,7 +17,7 @@ public class CameraHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _Player.eulerAngles = new Vector3(0, _CameraTransform.localEulerAngles.y, 0);
+        _Player.eulerAngles = new Vector3(0, _CameraTransform.eulerAngles.y, 0);
     }
 
 }

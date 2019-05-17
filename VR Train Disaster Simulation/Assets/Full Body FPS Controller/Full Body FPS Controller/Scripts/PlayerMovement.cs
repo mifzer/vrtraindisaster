@@ -17,6 +17,7 @@ namespace EasySurvivalScripts
         [Header("Shake Properties")]
         [SerializeField] private float _ShakeThreshold = 2;
         // [SerializeField] private float _ShakeOffset;
+        [SerializeField] private Transform _CameraFollow;
 
         public PlayerStates playerStates;
 
@@ -71,6 +72,10 @@ namespace EasySurvivalScripts
 
             //sync footsteps with controller
             PlayFootstepSounds();
+        }
+
+        void CameraFollowingPlayer(){
+            _CameraFollow.transform.position = transform.position;
         }
 
         void HandlePlayerControls()
