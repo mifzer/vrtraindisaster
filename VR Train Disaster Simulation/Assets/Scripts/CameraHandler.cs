@@ -18,7 +18,12 @@ public class CameraHandler : MonoBehaviour
     void Update()
     {
         _Player.eulerAngles = new Vector3(0, _CameraTransform.eulerAngles.y, 0);
-        _CameraTransform.position = _Player.position;
+        _CameraTransform.position = NewCameraPosition();
+    }
+
+    Vector3 NewCameraPosition(){
+        Vector3 cameraPosition = new Vector3(_Player.position.x, _CameraTransform.position.y, _Player.position.z);
+        return cameraPosition;
     }
 
 }
