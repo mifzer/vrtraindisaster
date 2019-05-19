@@ -14,7 +14,7 @@ public class Laser : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButton(0))
+        if (OVRInput.Get(OVRInput.RawButton.A))
         {
             ChangeColor(false);
         }
@@ -23,7 +23,7 @@ public class Laser : MonoBehaviour {
             ChangeColor(true);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (OVRInput.Get(OVRInput.Button.One))
         {
 
             LaserOff();

@@ -6,13 +6,8 @@ public class CameraHandler : MonoBehaviour
 {
     
     [SerializeField] private Transform _Player;
-    private Transform _CameraTransform;
+    [SerializeField] private Transform _CameraTransform;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _CameraTransform = this.transform;
-    }
 
     // Update is called once per frame
     void Update()
