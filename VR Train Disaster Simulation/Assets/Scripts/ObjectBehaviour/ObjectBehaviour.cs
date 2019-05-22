@@ -2,17 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ObjectState
+{
+    IDLE, PICKED
+}
+
 public class ObjectBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    
+    public string ObjectName;
+    public ObjectState State;
+    public Transform PickObject;
+
+    protected virtual void OnPick(){
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    protected virtual void OnIdel(){
+
     }
+
+
+
 }

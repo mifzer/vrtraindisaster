@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
-public class Laser : MonoBehaviour {
+public class ObjectController : MonoBehaviour {
 
     private LineRenderer laser;
     bool isGreen = false;
+
+    [SerializeField] private Transform _PlaceHolder;
 
     // Use this for initialization
     void Start () {
@@ -16,22 +18,24 @@ public class Laser : MonoBehaviour {
 	void Update () {
         if (OVRInput.Get(OVRInput.RawButton.A))
         {
-            ChangeColor(false);
+            ChangeColor(false); // red
+            HitObject();
         }
         else
         {
-            ChangeColor(true);
+            ChangeColor(true); // green
         }
 
-        // if (OVRInput.Get(OVRInput.Button.One))
-        // {
+        if (OVRInput.Get(OVRInput.Button.One))
+        {
 
-        //     LaserOff();
-        // }
-        // else
-        // {
-        //     ShootLaser();
-        // }
+            LaserOff();
+        }
+        else
+        {
+            ShootLaser();
+        }
+
 	}
 
     public void ChangeColor(bool isGreen)
@@ -53,11 +57,11 @@ public class Laser : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            if (hit.collider)
-            {
-                laser.SetPosition(1, hit.point);
-                if(!isGreen)Destroy(hit.transform.gameObject);
-            }
+            // if (hit.collider)
+            // {
+            //     laser.SetPosition(1, hit.point);
+            //     if(!isGreen)Destroy(hit.transform.gameObject);
+            // }
         }
         else
         {
@@ -71,12 +75,20 @@ public class Laser : MonoBehaviour {
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
 
-            if (hit.collider.CompareTag("FireExtinguisher")){
-                Debug.LogWarning("fire extinguisher");
-            }
+            // if (hit.collider.CompareTag("FireExtinguisher")){
+            //     Debug.LogWarning("fire extinguisher");
+            // }
 
             if(hit.collider.CompareTag("Hammer")){
-                Debug.LogWarning("hammer");
+                
+                Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
+
+                myObject.parent = _PlaceHolder;
+                myObject.position = _PlaceHolder.position;
+
+                // show pop up
+                UIManager.Instance.ShowPopUp("palu telah diambil");
+
             }
 
         }
