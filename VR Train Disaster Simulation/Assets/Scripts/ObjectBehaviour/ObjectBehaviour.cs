@@ -13,12 +13,13 @@ public class ObjectBehaviour : MonoBehaviour
     public string ObjectName;
     public ObjectState State;
     public Transform PickObject;
+    public Transform ParentObject;
 
-    protected virtual void OnPick(){
+    public virtual void OnPick(){
 
     }
 
-    protected virtual void OnIdel(){
+    public virtual void OnIdel(){
 
     }
 

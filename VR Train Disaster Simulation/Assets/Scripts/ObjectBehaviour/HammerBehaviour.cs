@@ -5,5 +5,11 @@ using UnityEngine;
 public class HammerBehaviour : ObjectBehaviour
 {
    
+   public override void OnPick(){
+
+       PickObject.parent = ParentObject;
+       PickObject.position = ParentObject.position;
+
+   }
 
 }
