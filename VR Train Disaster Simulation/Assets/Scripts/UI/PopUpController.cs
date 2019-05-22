@@ -6,7 +6,6 @@ using DG.Tweening;
 public class PopUpController : MonoBehaviour
 {
     
-    public string Message;
     [SerializeField] private Transform _Panel;
     [SerializeField] private Vector3 _FirstPosition;
 
@@ -15,15 +14,13 @@ public class PopUpController : MonoBehaviour
         _Panel = this.transform;
     }
 
-    public void OnShow(){
+    public void OnShow(string message){
         _Panel.gameObject.SetActive(true);
-        _Panel.DOLocalMoveY
+        _Panel.DOLocalMove(Vector3.zero, 0.4f);
     }
 
     public void OnHide(){
-
-
-
+        _Panel.DOLocalMove(_FirstPosition, 0.4f).OnComplete(() => _Panel.gameObject.SetActive(false));
     }
 
     
