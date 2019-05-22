@@ -23,15 +23,15 @@ public class Laser : MonoBehaviour {
             ChangeColor(true);
         }
 
-        if (OVRInput.Get(OVRInput.Button.One))
-        {
+        // if (OVRInput.Get(OVRInput.Button.One))
+        // {
 
-            LaserOff();
-        }
-        else
-        {
-            ShootLaser();
-        }
+        //     LaserOff();
+        // }
+        // else
+        // {
+        //     ShootLaser();
+        // }
 	}
 
     public void ChangeColor(bool isGreen)
@@ -46,6 +46,7 @@ public class Laser : MonoBehaviour {
         laser.SetPosition(0, transform.position);
         laser.SetPosition(1, transform.position);
     }
+
     void ShootLaser()
     {
         laser.SetPosition(0, transform.position);
@@ -61,6 +62,23 @@ public class Laser : MonoBehaviour {
         else
         {
             laser.SetPosition(1, transform.forward * 5000);
+        }
+    }
+
+    void HitObject(){
+        RaycastHit hit;
+        
+        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        {
+
+            if (hit.collider.CompareTag("FireExtinguisher")){
+                Debug.LogWarning("fire extinguisher");
+            }
+
+            if(hit.collider.CompareTag("Hammer")){
+                Debug.LogWarning("hammer");
+            }
+
         }
     }
 }
