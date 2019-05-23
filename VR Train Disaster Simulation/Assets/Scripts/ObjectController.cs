@@ -16,25 +16,29 @@ public class ObjectController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (OVRInput.Get(OVRInput.RawButton.A))
-        {
-            ChangeColor(false); // red
-            HitObject();
-        }
-        else
-        {
-            ChangeColor(true); // green
-        }
 
-        if (OVRInput.Get(OVRInput.Button.One))
-        {
+        HitObject();
+        ChangeColor(true); // green
+        // ShootLaser();
 
-            LaserOff();
-        }
-        else
-        {
-            ShootLaser();
-        }
+        // if (OVRInput.Get(OVRInput.RawButton.A))
+        // {
+        //     ChangeColor(false); // red
+        //     // HitObject();
+        // }
+        // else
+        // {
+        //     HitObject();
+        // }
+
+        // if (OVRInput.Get(OVRInput.Button.One))
+        // {
+
+        //     LaserOff();
+        // }
+        // else
+        // {
+        // }
 
 	}
 
@@ -51,36 +55,37 @@ public class ObjectController : MonoBehaviour {
         laser.SetPosition(1, transform.position);
     }
 
-    void ShootLaser()
-    {
-        laser.SetPosition(0, transform.position);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
-        {
-            // if (hit.collider)
-            // {
-            //     laser.SetPosition(1, hit.point);
-            //     if(!isGreen)Destroy(hit.transform.gameObject);
-            // }
-        }
-        else
-        {
-            laser.SetPosition(1, transform.forward * 5000);
-        }
-    }
+    // void ShootLaser()
+    // {
+    //     laser.SetPosition(0, transform.position);
+    //     RaycastHit hit;
+    //     if (Physics.Raycast(transform.position, transform.forward, out hit))
+    //     {
+    //         // if (hit.collider)
+    //         // {
+    //         //     laser.SetPosition(1, hit.point);
+    //         //     if(!isGreen)Destroy(hit.transform.gameObject);
+    //         // }
+    //     }
+    //     else
+    //     {
+    //         laser.SetPosition(1, transform.forward * 5000);
+    //     }
+    // }
 
     void HitObject(){
+        // Debug.Log("hitter");
+        laser.SetPosition(1, transform.forward);
+
         RaycastHit hit;
+        Ray myRay = new Ray(transform.position, transform.forward);
         
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
-        {
 
-            // if (hit.collider.CompareTag("FireExtinguisher")){
-            //     Debug.LogWarning("fire extinguisher");
-            // }
-
-            if(hit.collider.CompareTag("Hammer")){
-                
+        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity)){
+            Debug.DrawRay(transform.position, transform.forward, Color.blue);
+  
+            if(hit.collider.tag == "Hammer"){
+                    
                 Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
 
                 myObject.parent = _PlaceHolder;
@@ -88,9 +93,30 @@ public class ObjectController : MonoBehaviour {
 
                 // show pop up
                 UIManager.Instance.ShowPopUp("palu telah diambil");
-
+                Debug.Log("get hammer");
             }
 
+            // if (OVRInput.Get(OVRInput.RawButton.A)){
+                
+            //     ChangeColor(false);
+
+            //     if(hit.collider.tag == "Hammer"){
+                    
+            //         Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
+
+            //         myObject.parent = _PlaceHolder;
+            //         myObject.position = _PlaceHolder.position;
+
+            //         // show pop up
+            //         UIManager.Instance.ShowPopUp("palu telah diambil");
+
+            //     }
+
+            // }
+
+
+        } else {
+            Debug.DrawRay(transform.position, transform.forward, Color.yellow);  
         }
     }
 }
