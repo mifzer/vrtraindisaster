@@ -8,7 +8,7 @@ public class HammerBehaviour : ObjectBehaviour
    public override void OnPick(){
 
        PickObject.parent = ParentObject;
-       PickObject.position = ParentObject.position;
+       PickObject.localPosition = Vector3.zero;
 
    }
 

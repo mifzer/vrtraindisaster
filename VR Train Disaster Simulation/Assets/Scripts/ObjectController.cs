@@ -22,7 +22,7 @@ public class ObjectController : MonoBehaviour {
 
 	}
 
-    public void ChangeColor(bool isGreen)
+    void ChangeColor(bool isGreen)
     {
         this.isGreen = isGreen;
         Color c = isGreen ? Color.green : Color.white;
@@ -68,10 +68,7 @@ public class ObjectController : MonoBehaviour {
   
             // if(hit.collider.tag == "Hammer"){
                     
-            //     Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
-
-            //     myObject.parent = _PlaceHolder;
-            //     myObject.position = _PlaceHolder.position;
+            //     hit.collider.GetComponent<HammerBehaviour>().OnPick();
 
             //     // show pop up
             //     UIManager.Instance.ShowPopUp("palu telah diambil");
@@ -84,10 +81,8 @@ public class ObjectController : MonoBehaviour {
 
                 if(hit.collider.tag == "Hammer"){
                     
-                    Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
-
-                    myObject.parent = _PlaceHolder;
-                    myObject.position = _PlaceHolder.position;
+                    // Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
+                    hit.collider.GetComponent<HammerBehaviour>().OnPick();
 
                     // show pop up
                     UIManager.Instance.ShowPopUp("palu telah diambil");
@@ -96,9 +91,9 @@ public class ObjectController : MonoBehaviour {
 
             }
 
-
         } else {
             Debug.DrawRay(transform.position, transform.forward, Color.yellow); 
+             ChangeColor(true);
             // laser.SetPosition(1, transform.forward);
         }
     }

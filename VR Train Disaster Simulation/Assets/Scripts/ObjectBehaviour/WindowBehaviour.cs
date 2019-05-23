@@ -13,8 +13,8 @@ public class WindowBehaviour : MonoBehaviour
         
         if(other.CompareTag("Hammer")){
             
-            if(_IsTriggered == true)
-                return;
+            // if(_IsTriggered == true)
+            //     return;
 
             Debug.Log("crack");
             _CrackAudio.Play();
