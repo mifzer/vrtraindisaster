@@ -18,27 +18,7 @@ public class ObjectController : MonoBehaviour {
 	void Update () {
 
         HitObject();
-        ChangeColor(true); // green
-        // ShootLaser();
-
-        // if (OVRInput.Get(OVRInput.RawButton.A))
-        // {
-        //     ChangeColor(false); // red
-        //     // HitObject();
-        // }
-        // else
-        // {
-        //     HitObject();
-        // }
-
-        // if (OVRInput.Get(OVRInput.Button.One))
-        // {
-
-        //     LaserOff();
-        // }
-        // else
-        // {
-        // }
+        LaserPosition();
 
 	}
 
@@ -49,11 +29,16 @@ public class ObjectController : MonoBehaviour {
         laser.startColor = c;
     }
 
-    void LaserOff()
-    {
+    void LaserPosition(){
         laser.SetPosition(0, transform.position);
-        laser.SetPosition(1, transform.position);
+        laser.SetPosition(1, transform.position + transform.forward);
     }
+
+    // void LaserOff()
+    // {
+    //     laser.SetPosition(0, transform.position);
+    //     laser.SetPosition(1, transform.position);
+    // }
 
     // void ShootLaser()
     // {
@@ -61,11 +46,7 @@ public class ObjectController : MonoBehaviour {
     //     RaycastHit hit;
     //     if (Physics.Raycast(transform.position, transform.forward, out hit))
     //     {
-    //         // if (hit.collider)
-    //         // {
-    //         //     laser.SetPosition(1, hit.point);
-    //         //     if(!isGreen)Destroy(hit.transform.gameObject);
-    //         // }
+            
     //     }
     //     else
     //     {
@@ -75,7 +56,8 @@ public class ObjectController : MonoBehaviour {
 
     void HitObject(){
         // Debug.Log("hitter");
-        laser.SetPosition(1, transform.forward);
+        // laser.SetPosition(1, transform.forward);
+        ChangeColor(true);
 
         RaycastHit hit;
         Ray myRay = new Ray(transform.position, transform.forward);
@@ -84,39 +66,40 @@ public class ObjectController : MonoBehaviour {
         if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity)){
             Debug.DrawRay(transform.position, transform.forward, Color.blue);
   
-            if(hit.collider.tag == "Hammer"){
+            // if(hit.collider.tag == "Hammer"){
                     
-                Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
+            //     Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
 
-                myObject.parent = _PlaceHolder;
-                myObject.position = _PlaceHolder.position;
+            //     myObject.parent = _PlaceHolder;
+            //     myObject.position = _PlaceHolder.position;
 
-                // show pop up
-                UIManager.Instance.ShowPopUp("palu telah diambil");
-                Debug.Log("get hammer");
-            }
-
-            // if (OVRInput.Get(OVRInput.RawButton.A)){
-                
-            //     ChangeColor(false);
-
-            //     if(hit.collider.tag == "Hammer"){
-                    
-            //         Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
-
-            //         myObject.parent = _PlaceHolder;
-            //         myObject.position = _PlaceHolder.position;
-
-            //         // show pop up
-            //         UIManager.Instance.ShowPopUp("palu telah diambil");
-
-            //     }
-
+            //     // show pop up
+            //     UIManager.Instance.ShowPopUp("palu telah diambil");
+            //     Debug.Log("get hammer");
             // }
+
+            if (OVRInput.Get(OVRInput.RawButton.A)){
+                
+                ChangeColor(false);
+
+                if(hit.collider.tag == "Hammer"){
+                    
+                    Transform myObject = hit.collider.GetComponent<HammerBehaviour>().PickObject;
+
+                    myObject.parent = _PlaceHolder;
+                    myObject.position = _PlaceHolder.position;
+
+                    // show pop up
+                    UIManager.Instance.ShowPopUp("palu telah diambil");
+
+                }
+
+            }
 
 
         } else {
-            Debug.DrawRay(transform.position, transform.forward, Color.yellow);  
+            Debug.DrawRay(transform.position, transform.forward, Color.yellow); 
+            // laser.SetPosition(1, transform.forward);
         }
     }
 }
