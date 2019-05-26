@@ -2,27 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ObjectState
-{
-    IDLE, PICKED
-}
+// public enum ObjectState
+// {
+//     IDLE, PICKED
+// }
 
 public class ObjectBehaviour : MonoBehaviour
 {
     
     public string ObjectName;
-    public ObjectState State;
+    // public ObjectState State;
     public Transform PickObject;
     public Transform ParentObject;
 
     public virtual void OnPick(){
-
+        PickObject.parent = ParentObject;
+        PickObject.localPosition = Vector3.zero;
     }
-
-    public virtual void OnIdel(){
-
-    }
-
-
 
 }
