@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+
 
 public class MainMenuController : MonoBehaviour
 {
@@ -12,20 +14,7 @@ public class MainMenuController : MonoBehaviour
     [Header("Screen Fade")]
     [SerializeField] private ScreenFade _ScreenFade;
 
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
-    void Awake()
-    {
-       
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+   
     public void ShowMenu(GameObject mymenu){
         
         // setup
@@ -51,8 +40,35 @@ public class MainMenuController : MonoBehaviour
 
     }
 
-    void StartingFade(){
+#region Scenario
+
+    // start position scneario
+    public void SelectPosition(Toggle mytoggle){
+        string key = mytoggle.GetComponent<OptionProperties>().Key;
         
+        mytoggle.isOn = true;
+        _ScenarioData.ChairPosition = System.Convert.ToInt32(key);
+    }
+
+    public void SelectSimulation(Toggle mytoggle){
+        SimulationType key = (SimulationType) System.Enum.Parse(typeof(SimulationType), mytoggle.GetComponent<OptionProperties>().Key);
+
+        mytoggle.isOn = true;
+        _ScenarioData.SimulationTypeOf = key;
+    }
+
+    public void SelectFireSpot(Toggle mytoggle){
+        FireSpot key = (FireSpot) System.Enum.Parse(typeof(FireSpot), mytoggle.GetComponent<OptionProperties>().Key);
+
+        mytoggle.isOn = true;
+        _ScenarioData.FirePosition = key;
+    }
+
+#endregion
+
+    public void StartScenario(){
+        ScreenFade.Instance.FadeOut();
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene");
     }
 
 }

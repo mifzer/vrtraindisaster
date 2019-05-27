@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class PopUpController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PopUpController : MonoBehaviour
     [SerializeField] private Transform _Panel;
     [SerializeField] private Vector3 _FirstScale;
     [SerializeField] private CanvasGroup _CanvasGroup;
-    [SerializeField] private Text _TextMessage;
+    [SerializeField] private TextMeshProUGUI _TextMessage;
 
     // Start is called before the first frame update
     void Start(){

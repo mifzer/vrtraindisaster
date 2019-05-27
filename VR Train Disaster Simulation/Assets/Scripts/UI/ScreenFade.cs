@@ -14,6 +14,10 @@ public class ScreenFade : MonoBehaviour
         Instance = this;
 
         DontDestroyOnLoad(this);
+
+        if (FindObjectsOfType(GetType()).Length > 1){
+            Destroy(gameObject);
+        }
     }
 
     // Start is called before the first frame update
