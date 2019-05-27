@@ -10,7 +10,6 @@ using UnityEngine;
 public class ObjectBehaviour : MonoBehaviour
 {
     
-    public string ObjectName;
     // public ObjectState State;
     public Transform PickObject;
     public Transform ParentObject;

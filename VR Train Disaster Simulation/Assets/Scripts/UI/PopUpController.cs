@@ -14,9 +14,9 @@ public class PopUpController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _TextMessage;
 
     // Start is called before the first frame update
-    void Start(){
-        _Panel = this.transform;
-    }
+    // void Start(){
+    //     _Panel = this.transform;
+    // }
 
     public void OnShow(string message){
         _TextMessage.text = message;
