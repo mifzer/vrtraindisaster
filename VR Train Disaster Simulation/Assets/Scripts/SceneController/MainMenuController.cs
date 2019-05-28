@@ -12,7 +12,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private ScenarioData _ScenarioData;
 
     [Header("Screen Fade")]
-    [SerializeField] private ScreenFade _ScreenFade;
+    // [SerializeField] private ScreenFade _ScreenFade;
+    [SerializeField] private OVRScreenFade _ScreenFade;
 
    
     public void ShowMenu(GameObject mymenu){
@@ -35,40 +36,39 @@ public class MainMenuController : MonoBehaviour
         // setup
         Vector3 firstPosition = mymenu.transform.position;
         
-        mymenu.transform.DOMoveY(firstPosition.y - 5, 0.4f);
-        mymenu.GetComponent<CanvasGroup>().DOFade(0,0.2f).SetDelay(0.2f).OnComplete(() => mymenu.SetActive(false));
+        mymenu.transform.DOMoveY(firstPosition.y - 5, 0.4f).OnComplete(() => mymenu.SetActive(false));
+        mymenu.GetComponent<CanvasGroup>().DOFade(0,0.3f);
 
     }
 
 #region Scenario
 
     // start position scneario
-    public void SelectPosition(Toggle mytoggle){
-        string key = mytoggle.GetComponent<OptionProperties>().Key;
-        
-        mytoggle.isOn = true;
+    public void SelectPosition(string key){
         _ScenarioData.ChairPosition = System.Convert.ToInt32(key);
     }
 
-    public void SelectSimulation(Toggle mytoggle){
-        SimulationType key = (SimulationType) System.Enum.Parse(typeof(SimulationType), mytoggle.GetComponent<OptionProperties>().Key);
-
-        mytoggle.isOn = true;
-        _ScenarioData.SimulationTypeOf = key;
+    public void SelectSimulation(string key){
+        SimulationType myKey = (SimulationType) System.Enum.Parse(typeof(SimulationType), key);
+        _ScenarioData.SimulationTypeOf = myKey;
     }
 
-    public void SelectFireSpot(Toggle mytoggle){
-        FireSpot key = (FireSpot) System.Enum.Parse(typeof(FireSpot), mytoggle.GetComponent<OptionProperties>().Key);
-
-        mytoggle.isOn = true;
-        _ScenarioData.FirePosition = key;
+    public void SelectFireSpot(string key){
+        FireSpot mykey = (FireSpot) System.Enum.Parse(typeof(FireSpot), key);
+        _ScenarioData.FirePosition = mykey;
     }
 
 #endregion
 
     public void StartScenario(){
-        ScreenFade.Instance.FadeOut();
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene");
+        StartCoroutine(DelayScene());
+    }
+
+    IEnumerator DelayScene(){
+        // ScreenFade.Instance.FadeOut();
+        _ScreenFade.FadeOut();
+        yield return new WaitForSeconds(2);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
 }

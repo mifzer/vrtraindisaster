@@ -7,10 +7,7 @@ public class ScenarioManager : MonoBehaviour
     
     public static ScenarioManager Instance;
     [SerializeField] private ScenarioData _ScenarioData;
-
-    // public delegate void Scenario();
-    // public event Scenario OnStartScenario;
-    // public event Scenario OnFinishScenario;
+    [SerializeField] private OVRScreenFade _ScreeFade;
 
     [Header("Collider Simulation")]
     [SerializeField] private Collider[] _AllColliderPaluSimulation;
@@ -21,6 +18,12 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private GameObject _Center;
     [SerializeField] private GameObject _Bordes;
 
+    [Header("Start Position")]
+    [SerializeField] private Transform _ChairTwo;
+    [SerializeField] private Transform _ChairSeven;
+    [SerializeField] private Transform _ChairTwelve;
+    [SerializeField] private Transform _Player;
+
     void Awake(){
         Instance = this;
     }
@@ -28,6 +31,12 @@ public class ScenarioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         
+    }
+
+    void Update(){
+        if (OVRInput.Get(OVRInput.RawButton.Back)){
+            StartCoroutine(DelayLoadScene());
+        }
     }
 
     void Initialize(){
@@ -38,13 +47,25 @@ public class ScenarioManager : MonoBehaviour
         // setup collider simulation
         SetupColliderSimulation();
 
+        // setup position
+        SetupPosition();
+
     }
 
     public void FinishScenario(){
+        // save data
         
+        // load scene
+        StartCoroutine(DelayLoadScene());
     }
 
-    GameObject EnableFireSpot(){
+    IEnumerator DelayLoadScene(){
+        _ScreeFade.FadeOut();
+        yield return new WaitForSeconds(2);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
+    }
+
+    void EnableFireSpot(){
 
         if(_ScenarioData.FirePosition == FireSpot.BORDES){
             _Bordes.SetActive(true);
@@ -54,12 +75,12 @@ public class ScenarioManager : MonoBehaviour
             _Center.SetActive(true);
         }
 
-        return null;
     }
 
     void SetupColliderSimulation(){
 
         switch(_ScenarioData.SimulationTypeOf){
+            
             case SimulationType.FREE_TRIAL:
                 break;
             
@@ -100,6 +121,26 @@ public class ScenarioManager : MonoBehaviour
                 _ColliderAparSimulation.enabled = false;
 
                 break;
+        }
+
+    }
+
+    void SetupPosition(){
+        
+        switch(_ScenarioData.ChairPosition){
+            
+            case 2:
+                _Player.position = _ChairTwo.position;
+                break;
+
+            case 7:
+                _Player.position = _ChairSeven.position;
+                break;
+
+            case 12:
+                _Player.position = _ChairTwelve.position;
+                break;
+
         }
 
     }
