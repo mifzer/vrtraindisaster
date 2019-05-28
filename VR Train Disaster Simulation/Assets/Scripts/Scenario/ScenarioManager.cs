@@ -30,13 +30,20 @@ public class ScenarioManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-        
+        Initialize();
     }
 
     void Update(){
         if (OVRInput.Get(OVRInput.RawButton.Back)){
             StartCoroutine(DelayLoadScene());
         }
+
+        // apar
+        // if(OVRInput.Get(OVRInput.RawTouch.Any) && _ScenarioData.SimulationTypeOf == SimulationType.APAR){
+        //     // keluarin semprotan
+
+        // }
+
     }
 
     void Initialize(){
