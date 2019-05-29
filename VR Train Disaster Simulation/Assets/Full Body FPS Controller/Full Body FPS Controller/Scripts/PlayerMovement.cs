@@ -59,9 +59,11 @@ namespace EasySurvivalScripts
         
         void InitStartPos(){
             if(_ScenarioData.ChairPosition == 2){
-                characterController.SimpleMove(_AllListStartPosition[0] );
+                // characterController.SimpleMove(_AllListStartPosition[0] );
+                transform.position = _AllListStartPosition[0];
             }else if(_ScenarioData.ChairPosition == 12){
-                characterController.SimpleMove(_AllListStartPosition[2]);
+                transform.position = _AllListStartPosition[2];
+                // characterController.SimpleMove(_AllListStartPosition[2]);
             }
         }
 
@@ -71,7 +73,7 @@ namespace EasySurvivalScripts
             characterController = GetComponent<CharacterController>();
             _audioSource = gameObject.AddComponent<AudioSource>();
 
-            // InitStartPos();
+            InitStartPos();
         }
 
         // Update is called once per frame
@@ -98,32 +100,32 @@ namespace EasySurvivalScripts
 #region input accelerometer
             float vInput = 0;
 
-            if(_IsInitialPositionInStart){
+            // if(_IsInitialPositionInStart){
                 
-                // vInput += Time.deltaTime;
+            //     // vInput += Time.deltaTime;
 
-                if(_ScenarioData.ChairPosition == 2){
-                    vInput += Time.deltaTime * 1000;
-                    // vInput += 20000;
+            //     if(_ScenarioData.ChairPosition == 2){
+            //         vInput += Time.deltaTime * 1000;
+            //         // vInput += 20000;
                     
-                    if( transform.position.z > _AllListStartPosition[0].z){
-                        Debug.Log("max");
-                        _IsInitialPositionInStart = false;
-                    }
+            //         if( transform.position.z > _AllListStartPosition[0].z){
+            //             Debug.Log("max");
+            //             _IsInitialPositionInStart = false;
+            //         }
 
-                }
+            //     }
 
-                if(_ScenarioData.ChairPosition == 12){
-                    vInput -= Time.deltaTime * 1000;
+            //     if(_ScenarioData.ChairPosition == 12){
+            //         vInput -= Time.deltaTime * 1000;
 
-                    if( transform.position.z < _AllListStartPosition[2].z){
-                        Debug.Log("min");
-                        _IsInitialPositionInStart = false;
-                    }
+            //         if( transform.position.z < _AllListStartPosition[2].z){
+            //             Debug.Log("min");
+            //             _IsInitialPositionInStart = false;
+            //         }
 
-                }
+            //     }
 
-            }
+            // }
 
             if(Input.acceleration.sqrMagnitude > _ShakeThreshold){
                 vInput = 1;

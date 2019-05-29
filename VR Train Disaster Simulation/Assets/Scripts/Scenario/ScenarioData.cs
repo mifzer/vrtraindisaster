@@ -12,6 +12,12 @@ public enum FireSpot
     BORDES, CENTER
 }
 
+[System.Serializable]
+public class ErrorEquation{
+    public int SimulationNumber;
+    public int CorrectStep; 
+}
+
 [CreateAssetMenu(fileName = "CurrentScenarioData", menuName = "Scenario Data/CurrentScenarioData")]
 public class ScenarioData : ScriptableObject
 {
@@ -27,4 +33,7 @@ public class ScenarioData : ScriptableObject
     public string FirstTimeReaction;
     public string CompletationTimeReaction;
 
+    [Header("Error Equation")]
+    public string ErrorRate;
+    public ErrorEquation[] AllListSimulationCorrectStep;
 }
