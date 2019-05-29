@@ -17,32 +17,49 @@ public class AparBehaviour : ObjectBehaviour
         ScenarioManager.Instance.SaveFirstTimeReaction();
     }
 
-    // Update is called once per frame
-    void Update(){
-        
+    public void FireHandler(){
+
         if(_IsActive == false)
             return;
-
-        if(_Power > _Threshold){
-            ScenarioManager.Instance.FinishScenario();
-            return;
-        }
-
-        if(_ScenarioData.SimulationTypeOf == SimulationType.APAR && OVRInput.Get(OVRInput.RawButton.Any)){
-            // show gameobject
-
-            _Power += Time.deltaTime;
-        }
-
+        
+        ScenarioManager.Instance.FinishScenario();
     }
 
+    // // Update is called once per frame
+    // void Update(){
+        
+    //     if(_IsActive == false)
+    //         return;
+
+    //     // if(_Power > _Threshold){
+    //     //     ScenarioManager.Instance.FinishScenario();
+    //     //     return;
+    //     // }
+
+    //     if(_ScenarioData.SimulationTypeOf == SimulationType.APAR && OVRInput.Get(OVRInput.RawButton.Any)){
+    //         // show gameobject
+
+    //         // _Power += Time.deltaTime;
+    //         ScenarioManager.Instance.FinishScenario();
+    //         _IsActive = false;
+    //     }
+
+    // }
+
     void OnTriggerEnter(Collider other){
-        _IsActive = true;
+        
+        if(other.CompareTag("fire")){
+            _IsActive = true;
+        }
+
     }
 
     void OnTriggerExit(Collider other){
-        _IsActive = false;
-        _Power = 0;
+        // _IsActive = false;
+        // _Power = 0;
+        if(other.CompareTag("fire")){
+            _IsActive = false;
+        }
     }
 
 }
