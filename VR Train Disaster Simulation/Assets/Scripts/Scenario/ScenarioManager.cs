@@ -25,7 +25,6 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private Transform _ChairTwo;
     [SerializeField] private Transform _ChairSeven;
     [SerializeField] private Transform _ChairTwelve;
-    [SerializeField] private Transform _Player;
 
     void Awake(){
         Instance = this;
@@ -57,9 +56,7 @@ public class ScenarioManager : MonoBehaviour
         // setup collider simulation
         SetupColliderSimulation();
 
-        // setup position
-        SetupPosition();
-
+        
     }
 
    
@@ -180,27 +177,6 @@ public class ScenarioManager : MonoBehaviour
         }
 
     }
-
-    void SetupPosition(){
-        
-        switch(_ScenarioData.ChairPosition){
-            
-            case 2:
-                _Player.position = _ChairTwo.position;
-                break;
-
-            case 7:
-                _Player.position = _ChairSeven.position;
-                break;
-
-            case 12:
-                _Player.position = _ChairTwelve.position;
-                break;
-
-        }
-
-    }
-
-    
+   
 
 }
