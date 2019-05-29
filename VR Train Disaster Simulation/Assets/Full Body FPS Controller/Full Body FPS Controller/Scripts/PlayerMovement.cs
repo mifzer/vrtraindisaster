@@ -58,7 +58,7 @@ namespace EasySurvivalScripts
 
         
         void InitStartPos(){
-            int length = 10;
+            int length = 180;
 
             if(_ScenarioData.ChairPosition == 2){
                 
