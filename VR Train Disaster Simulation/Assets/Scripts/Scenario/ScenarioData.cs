@@ -23,4 +23,8 @@ public class ScenarioData : ScriptableObject
     public SimulationType SimulationTypeOf;
     public FireSpot FirePosition;
 
+    [Header("Time")]
+    public string FirstTimeReaction;
+    public string CompletationTimeReaction;
+
 }

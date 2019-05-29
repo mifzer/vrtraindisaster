@@ -41,6 +41,10 @@ public class MainMenuController : MonoBehaviour
 
     }
 
+    public void InputName(TMPro.TMP_InputField inputfield){
+        _ScenarioData.Name = inputfield.text;
+    }
+
 #region Scenario
 
     // start position scneario

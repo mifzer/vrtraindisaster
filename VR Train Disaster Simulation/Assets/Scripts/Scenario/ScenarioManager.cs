@@ -8,6 +8,9 @@ public class ScenarioManager : MonoBehaviour
     public static ScenarioManager Instance;
     [SerializeField] private ScenarioData _ScenarioData;
     [SerializeField] private OVRScreenFade _ScreeFade;
+    
+    private float _CurrentTime;
+    private IEnumerator _TimerHandler;
 
     [Header("Collider Simulation")]
     [SerializeField] private Collider[] _AllColliderPaluSimulation;
@@ -59,7 +62,53 @@ public class ScenarioManager : MonoBehaviour
 
     }
 
+   
+
+    void StartTimer(){
+        
+        if(_TimerHandler != null)
+            StopCoroutine(_TimerHandler);
+        
+        _TimerHandler = MyTimer();
+        StartCoroutine(_TimerHandler);
+
+    }
+
+    void StopTimer(){
+        if(_TimerHandler != null)
+            StopCoroutine(_TimerHandler);
+    }
+
+    IEnumerator MyTimer(){
+        
+        while(true){
+            _CurrentTime += Time.deltaTime;
+            yield return null;
+        }
+
+    }
+
+    public void SaveFirstTimeReaction(){
+
+        int minutes = Mathf.FloorToInt(_CurrentTime / 60F);
+        int seconds = Mathf.FloorToInt(_CurrentTime - minutes * 60);
+        string niceTime = string.Format("{0:0}:{1:00}", minutes, seconds);
+
+        _ScenarioData.FirstTimeReaction = niceTime;
+    }
+
+    void SaveCompletitionTime(){
+        int minutes = Mathf.FloorToInt(_CurrentTime / 60F);
+        int seconds = Mathf.FloorToInt(_CurrentTime - minutes * 60);
+        string niceTime = string.Format("{0:0}:{1:00}", minutes, seconds);
+
+        _ScenarioData.CompletationTimeReaction = niceTime;
+    }
+
     public void FinishScenario(){
+        
+
+        
         // save data
         
         // load scene

@@ -14,12 +14,14 @@ public class RemBehaviour : ObjectBehaviour
     [SerializeField] private AudioSource _RemAudio;
 
     public override void OnPick(){
+        ScenarioManager.Instance.SaveFirstTimeReaction();
         PickObject.DOLocalRotate(_TargetRotation, 0.5f, RotateMode.Fast).OnComplete(() => FinishAction());
     }
 
     void FinishAction(){
         // play audio
         _RemAudio.Play();
+        ScenarioManager.Instance.FinishScenario();
     }
 
 }

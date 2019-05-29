@@ -22,6 +22,8 @@ public class WindowBehaviour : MonoBehaviour
             // show pop up
             UIManager.Instance.ShowPopUp("kaca nya pecah");
             
+            // balik ke main menu scene
+            ScenarioManager.Instance.FinishScenario();
         }
     }
 
