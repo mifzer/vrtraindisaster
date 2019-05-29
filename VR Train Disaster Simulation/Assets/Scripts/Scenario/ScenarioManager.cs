@@ -21,10 +21,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private GameObject _Center;
     [SerializeField] private GameObject _Bordes;
 
-    [Header("Start Position")]
-    [SerializeField] private Transform _ChairTwo;
-    [SerializeField] private Transform _ChairSeven;
-    [SerializeField] private Transform _ChairTwelve;
+    public int CounterStep = 0;
 
     void Awake(){
         Instance = this;

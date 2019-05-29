@@ -58,12 +58,28 @@ namespace EasySurvivalScripts
 
         
         void InitStartPos(){
+            int length = 180;
+
             if(_ScenarioData.ChairPosition == 2){
-                // characterController.SimpleMove(_AllListStartPosition[0] );
-                transform.position = _AllListStartPosition[0];
+                
+                for(int i=0; i<length; i++){
+                    Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * i : Vector3.zero;
+                    Vector3 rightMovement = characterController.isGrounded == true ? transform.right * 0 : Vector3.zero;
+
+                    float _speed = Input.GetButton(RunInput) ? runSpeed : walkSpeed;
+                    characterController.SimpleMove(Vector3.ClampMagnitude(fwdMovement + rightMovement, 1f) * _speed);
+                }
+
             }else if(_ScenarioData.ChairPosition == 12){
-                transform.position = _AllListStartPosition[2];
-                // characterController.SimpleMove(_AllListStartPosition[2]);
+ 
+                for(int i=0; i<length; i++){
+                    Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * -i : Vector3.zero;
+                    Vector3 rightMovement = characterController.isGrounded == true ? transform.right * 0 : Vector3.zero;
+
+                    float _speed = Input.GetButton(RunInput) ? runSpeed : walkSpeed;
+                    characterController.SimpleMove(Vector3.ClampMagnitude(fwdMovement + rightMovement, 1f) * _speed);
+                }
+ 
             }
         }
 
