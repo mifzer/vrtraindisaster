@@ -49,7 +49,7 @@ public class MainMenuController : MonoBehaviour
 
     // start position scneario
     public void SelectPosition(string key){
-        _ScenarioData.ChairPosition = System.Convert.ToInt32(key);
+        _ScenarioData.ChairPosition = key;
     }
 
     public void SelectSimulation(string key){

@@ -4,16 +4,19 @@ using UnityEngine;
 
 public enum SimulationType
 {
-    FREE_TRIAL, APAR, PALU, REM 
+    // FREE_TRIAL, APAR, PALU, REM
+    A,B,C,D 
 }
 
 public enum FireSpot
 {
-    BORDES, CENTER
+    // BORDES, CENTER
+    A,B
 }
 
 [System.Serializable]
 public class ErrorEquation{
+    public string Key;
     public int SimulationNumber;
     public int CorrectStep; 
 }
@@ -25,15 +28,18 @@ public class ScenarioData : ScriptableObject
     public string Name;
 
     [Header("Scenario")]
-    public int ChairPosition;
+    public string ChairPosition;
     public SimulationType SimulationTypeOf;
     public FireSpot FirePosition;
 
     [Header("Time")]
     public string FirstTimeReaction;
     public string CompletationTimeReaction;
+    public string TimeDate;
 
     [Header("Error Equation")]
     public string ErrorRate;
     public ErrorEquation[] AllListSimulationCorrectStep;
+
+    
 }

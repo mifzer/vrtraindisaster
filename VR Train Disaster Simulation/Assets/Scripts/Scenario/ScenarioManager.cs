@@ -22,6 +22,9 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private GameObject _Bordes;
 
     public int CounterStep = 0;
+    public bool IsFinish = false;
+
+    [SerializeField] private float _TimeLimit;
 
     void Awake(){
         Instance = this;
@@ -36,13 +39,6 @@ public class ScenarioManager : MonoBehaviour
         if (OVRInput.Get(OVRInput.RawButton.Back)){
             StartCoroutine(DelayLoadScene());
         }
-
-        // apar
-        // if(OVRInput.Get(OVRInput.RawTouch.Any) && _ScenarioData.SimulationTypeOf == SimulationType.APAR){
-        //     // keluarin semprotan
-
-        // }
-
     }
 
     void Initialize(){
@@ -53,10 +49,7 @@ public class ScenarioManager : MonoBehaviour
         // setup collider simulation
         SetupColliderSimulation();
 
-        
     }
-
-   
 
     void StartTimer(){
         
@@ -76,6 +69,12 @@ public class ScenarioManager : MonoBehaviour
     IEnumerator MyTimer(){
         
         while(true){
+
+            if(_CurrentTime >= _TimeLimit){
+                FinishScenario();
+                break;
+            }
+
             _CurrentTime += Time.deltaTime;
             yield return null;
         }
@@ -99,15 +98,65 @@ public class ScenarioManager : MonoBehaviour
         _ScenarioData.CompletationTimeReaction = niceTime;
     }
 
-    public void FinishScenario(){
-        
+    void FindErrorRate(){
 
-        
-        // save data
-        
+        string key = _ScenarioData.ChairPosition + _ScenarioData.SimulationTypeOf.ToString() + _ScenarioData.FirePosition;
+    
+        int errorRate = ((CounterStep - CorrectStep(key)) / 2) / CorrectStep(key);
+
+        _ScenarioData.ErrorRate = errorRate.ToString();
+    }
+
+    int CorrectStep(string key){
+
+        int length = _ScenarioData.AllListSimulationCorrectStep.Length;
+        int correctStep = 0;
+
+        for (int i = 0; i < length; i++){
+            if(key == _ScenarioData.AllListSimulationCorrectStep[i].Key){
+                correctStep = _ScenarioData.AllListSimulationCorrectStep[i].CorrectStep;
+            }
+        }
+
+        return correctStep;
+    }
+
+    public void FinishScenario(){
+
+        // save complete time
+        SaveCompletitionTime();
+
+        // error rate
+        FindErrorRate();
+
+        // send data
+        StartCoroutine(PostToForm());
+
         // load scene
         StartCoroutine(DelayLoadScene());
     }
+
+#region SEND DATA
+
+    IEnumerator PostToForm(){
+        WWWForm myForm = new WWWForm();
+        
+        myForm.AddField("","");
+        myForm.AddField("","");
+        myForm.AddField("","");
+        myForm.AddField("","");
+        myForm.AddField("","");
+        myForm.AddField("","");
+        myForm.AddField("","");
+
+        byte[] rawData = myForm.data;
+
+        WWW request = new WWW("", rawData);
+        yield return request;
+
+    }
+
+#endregion
 
     IEnumerator DelayLoadScene(){
         _ScreeFade.FadeOut();
@@ -117,7 +166,7 @@ public class ScenarioManager : MonoBehaviour
 
     void EnableFireSpot(){
 
-        if(_ScenarioData.FirePosition == FireSpot.BORDES){
+        if(_ScenarioData.FirePosition == FireSpot.A){
             _Bordes.SetActive(true);
             _Center.SetActive(false);
         }else{
@@ -131,10 +180,10 @@ public class ScenarioManager : MonoBehaviour
 
         switch(_ScenarioData.SimulationTypeOf){
             
-            case SimulationType.FREE_TRIAL:
+            case SimulationType.A:
                 break;
             
-            case SimulationType.APAR:
+            case SimulationType.B:
 
                 // disable collider palu
                 for(int i=0; i<_AllColliderPaluSimulation.Length; i++){
@@ -148,7 +197,7 @@ public class ScenarioManager : MonoBehaviour
 
                 break;
 
-            case SimulationType.PALU:
+            case SimulationType.C:
                 
                 // disable collider rem
                 for(int i=0; i<_AllColliderRemSimulation.Length; i++){
@@ -160,7 +209,7 @@ public class ScenarioManager : MonoBehaviour
 
                 break;
 
-            case SimulationType.REM:
+            case SimulationType.D:
 
                 // disable collider palu
                 for(int i=0; i<_AllColliderPaluSimulation.Length; i++){

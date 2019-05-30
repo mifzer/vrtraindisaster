@@ -16,10 +16,10 @@ namespace EasySurvivalScripts
     {
         [Header("Shake Properties")]
         [SerializeField] private float _ShakeThreshold = 2;
-        [SerializeField] private Vector3[] _AllListStartPosition;
+        // [SerializeField] private Vector3[] _AllListStartPosition;
         [SerializeField] private ScenarioData _ScenarioData;
-        [SerializeField] private bool _IsInitialPositionInStart = true;
-        
+        // [SerializeField] private bool _IsInitialPositionInStart = true;
+        private bool _IsFirstReactionTime = true;
 
         public PlayerStates playerStates;
 
@@ -60,7 +60,7 @@ namespace EasySurvivalScripts
         void InitStartPos(){
             int length = 180;
 
-            if(_ScenarioData.ChairPosition == 2){
+            if(_ScenarioData.ChairPosition == "A"){
                 
                 for(int i=0; i<length; i++){
                     Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * i : Vector3.zero;
@@ -70,7 +70,7 @@ namespace EasySurvivalScripts
                     characterController.SimpleMove(Vector3.ClampMagnitude(fwdMovement + rightMovement, 1f) * _speed);
                 }
 
-            }else if(_ScenarioData.ChairPosition == 12){
+            }else if(_ScenarioData.ChairPosition == "C"){
  
                 for(int i=0; i<length; i++){
                     Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * -i : Vector3.zero;
@@ -144,6 +144,13 @@ namespace EasySurvivalScripts
             // }
 
             if(Input.acceleration.sqrMagnitude > _ShakeThreshold){
+                
+                // save first reaction
+                if(_IsFirstReactionTime == true){
+                    ScenarioManager.Instance.SaveFirstTimeReaction();
+                    _IsFirstReactionTime = false;
+                }
+                
                 vInput = 1;
             }
 
