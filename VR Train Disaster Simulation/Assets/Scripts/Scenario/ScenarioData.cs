@@ -14,6 +14,15 @@ public enum FireSpot
     A,B
 }
 
+public enum FinishSimulation
+{
+    FAIL, FINISH
+}
+
+public enum Startpos{
+    A,B,C
+}
+
 [System.Serializable]
 public class ErrorEquation{
     public string Key;
@@ -28,7 +37,7 @@ public class ScenarioData : ScriptableObject
     public string Name;
 
     [Header("Scenario")]
-    public string ChairPosition;
+    public Startpos ChairPosition;
     public SimulationType SimulationTypeOf;
     public FireSpot FirePosition;
 

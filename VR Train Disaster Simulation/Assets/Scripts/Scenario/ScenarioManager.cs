@@ -21,10 +21,13 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private GameObject _Center;
     [SerializeField] private GameObject _Bordes;
 
-    public int CounterStep = 0;
-    public bool IsFinish = false;
+    public float CounterStep = 0;
+    public FinishSimulation FinishState;
+    [SerializeField] private string _StartingTime;
+    [SerializeField] private string _FinishTime;
 
     [SerializeField] private float _TimeLimit;
+
 
     void Awake(){
         Instance = this;
@@ -39,16 +42,32 @@ public class ScenarioManager : MonoBehaviour
         if (OVRInput.Get(OVRInput.RawButton.Back)){
             StartCoroutine(DelayLoadScene());
         }
+
+        if(Input.GetKeyDown(KeyCode.Space)){
+            // StartCoroutine(PostToForm());
+            FinishScenario();
+        }
     }
 
+    int _PlayerNumber = 0;
+
     void Initialize(){
-        
+        _StartingTime = System.DateTime.Now.ToString();
+
         // fire position
         EnableFireSpot();
 
         // setup collider simulation
         SetupColliderSimulation();
 
+        StartTimer();
+
+        if(PlayerPrefs.HasKey("Player")){
+            PlayerPrefs.SetInt("Player",1);
+        }else{
+            _PlayerNumber = PlayerPrefs.GetInt("Player");
+            PlayerPrefs.SetInt("Player", _PlayerNumber++);
+        }
     }
 
     void StartTimer(){
@@ -68,6 +87,8 @@ public class ScenarioManager : MonoBehaviour
 
     IEnumerator MyTimer(){
         
+        // _StartingTime = System.DateTime.Now.ToString();
+
         while(true){
 
             if(_CurrentTime >= _TimeLimit){
@@ -102,9 +123,10 @@ public class ScenarioManager : MonoBehaviour
 
         string key = _ScenarioData.ChairPosition + _ScenarioData.SimulationTypeOf.ToString() + _ScenarioData.FirePosition;
     
-        int errorRate = ((CounterStep - CorrectStep(key)) / 2) / CorrectStep(key);
-
-        _ScenarioData.ErrorRate = errorRate.ToString();
+        float errorRate = ((CounterStep - CorrectStep(key)) / 2);
+        Debug.Log(errorRate);
+        
+        _ScenarioData.ErrorRate = errorRate.ToString() + " / " + CorrectStep(key).ToString(); 
     }
 
     int CorrectStep(string key){
@@ -123,6 +145,15 @@ public class ScenarioManager : MonoBehaviour
 
     public void FinishScenario(){
 
+        // save to time stamp finish
+        _FinishTime = System.DateTime.Now.ToString();
+
+        if(_CurrentTime >= _TimeLimit){
+            FinishState = FinishSimulation.FAIL;
+        }else{
+            FinishState = FinishSimulation.FINISH;
+        }
+
         // save complete time
         SaveCompletitionTime();
 
@@ -133,7 +164,7 @@ public class ScenarioManager : MonoBehaviour
         StartCoroutine(PostToForm());
 
         // load scene
-        StartCoroutine(DelayLoadScene());
+        // StartCoroutine(DelayLoadScene());
     }
 
 #region SEND DATA
@@ -141,18 +172,42 @@ public class ScenarioManager : MonoBehaviour
     IEnumerator PostToForm(){
         WWWForm myForm = new WWWForm();
         
-        myForm.AddField("","");
-        myForm.AddField("","");
-        myForm.AddField("","");
-        myForm.AddField("","");
-        myForm.AddField("","");
-        myForm.AddField("","");
-        myForm.AddField("","");
+        // myForm.AddField("entry.40503718", _ScenarioData.Name); // name
+        myForm.AddField("entry.40503718", "" + PlayerPrefs.GetInt("Player")); // name
+        myForm.AddField("entry.1044271779", _ScenarioData.ChairPosition.ToString()); // chair start position
+        myForm.AddField("entry.1821314532", _ScenarioData.SimulationTypeOf.ToString()); // kind of simulation
+        myForm.AddField("entry.2058439020", _ScenarioData.FirePosition.ToString()); // fire spot
+        myForm.AddField("entry.476343051", _ScenarioData.ChairPosition + _ScenarioData.SimulationTypeOf.ToString() + _ScenarioData.FirePosition.ToString()); // urutan skenario
+        myForm.AddField("entry.709853587", FinishState.ToString()); // gagal atau finish
+        myForm.AddField("entry.1688379912", _ScenarioData.FirstTimeReaction); // reaction time
+        myForm.AddField("entry.1033728782", _ScenarioData.CompletationTimeReaction); // completetion time
+        myForm.AddField("entry.317004812", _ScenarioData.ErrorRate); // error rate
+        myForm.AddField("entry.1694726491", CounterStep.ToString()); // counter step
+        myForm.AddField("entry.375297286", CorrectStep(_ScenarioData.ChairPosition + _ScenarioData.SimulationTypeOf.ToString() + _ScenarioData.FirePosition.ToString())); // correct step
+        myForm.AddField("entry.807008128", _StartingTime); // Timestamp Start
+        myForm.AddField("entry.1947457399", _FinishTime); // Timestamp Finish
 
         byte[] rawData = myForm.data;
 
-        WWW request = new WWW("", rawData);
+        WWW request = new WWW("https://docs.google.com/forms/d/e/1FAIpQLScU8067VaIz8GKw7JE5mWEMA8mOsDidHtr8lIrGYqlw0Ki9FQ/formResponse", rawData);
+        // UnityEngine.Networking.UnityWebRequest request = UnityEngine.Networking.UnityWebRequest.Post("https://docs.google.com/forms/d/e/1FAIpQLScU8067VaIz8GKw7JE5mWEMA8mOsDidHtr8lIrGYqlw0Ki9FQ/formResponse", myForm);
+        // yield return request.SendWebRequest();
         yield return request;
+
+        if (request.error != null)
+        {
+            // Debug.Log(request.error);
+            UIManager.Instance.ShowPopUp(request.error);
+        }
+        else
+        {
+            // Debug.Log("Form upload complete!");
+            UIManager.Instance.ShowPopUp("Data upload complete!");
+            StartCoroutine(DelayLoadScene());
+        }
+
+        request.Dispose();
+        
 
     }
 

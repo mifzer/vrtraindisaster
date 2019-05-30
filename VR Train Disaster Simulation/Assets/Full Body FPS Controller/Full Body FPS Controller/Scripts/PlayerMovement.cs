@@ -60,7 +60,7 @@ namespace EasySurvivalScripts
         void InitStartPos(){
             int length = 180;
 
-            if(_ScenarioData.ChairPosition == "A"){
+            if(_ScenarioData.ChairPosition == Startpos.A){
                 
                 for(int i=0; i<length; i++){
                     Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * i : Vector3.zero;
@@ -70,7 +70,7 @@ namespace EasySurvivalScripts
                     characterController.SimpleMove(Vector3.ClampMagnitude(fwdMovement + rightMovement, 1f) * _speed);
                 }
 
-            }else if(_ScenarioData.ChairPosition == "C"){
+            }else if(_ScenarioData.ChairPosition == Startpos.C){
  
                 for(int i=0; i<length; i++){
                     Vector3 fwdMovement = characterController.isGrounded == true ? transform.forward * -i : Vector3.zero;

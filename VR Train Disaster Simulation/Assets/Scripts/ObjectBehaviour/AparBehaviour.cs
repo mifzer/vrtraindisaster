@@ -15,6 +15,7 @@ public class AparBehaviour : ObjectBehaviour
     public override void OnPick(){
         base.OnPick();
         ScenarioManager.Instance.SaveFirstTimeReaction();
+        _IsActive = true;
     }
 
     public void FireHandler(){
@@ -46,20 +47,20 @@ public class AparBehaviour : ObjectBehaviour
 
     // }
 
-    void OnTriggerEnter(Collider other){
+    // void OnTriggerEnter(Collider other){
         
-        if(other.CompareTag("fire")){
-            _IsActive = true;
-        }
+    //     if(other.CompareTag("fire")){
+    //         _IsActive = true;
+    //     }
 
-    }
+    // }
 
-    void OnTriggerExit(Collider other){
-        // _IsActive = false;
-        // _Power = 0;
-        if(other.CompareTag("fire")){
-            _IsActive = false;
-        }
-    }
+    // void OnTriggerExit(Collider other){
+    //     // _IsActive = false;
+    //     // _Power = 0;
+    //     if(other.CompareTag("fire")){
+    //         _IsActive = false;
+    //     }
+    // }
 
 }

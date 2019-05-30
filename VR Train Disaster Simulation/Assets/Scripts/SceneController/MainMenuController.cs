@@ -49,7 +49,8 @@ public class MainMenuController : MonoBehaviour
 
     // start position scneario
     public void SelectPosition(string key){
-        _ScenarioData.ChairPosition = key;
+        Startpos myKey = (Startpos) System.Enum.Parse(typeof(Startpos), key);
+        _ScenarioData.ChairPosition = myKey;
     }
 
     public void SelectSimulation(string key){
