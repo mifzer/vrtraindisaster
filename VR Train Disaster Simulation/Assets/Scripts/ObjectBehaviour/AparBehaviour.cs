@@ -5,16 +5,16 @@ using UnityEngine;
 public class AparBehaviour : ObjectBehaviour
 {
     
-    [SerializeField] private ScenarioData _ScenarioData;
+    // [SerializeField] private ScenarioData _ScenarioData;
     private bool _IsActive = false;
-    [SerializeField] private float _Threshold = 0;
-    private float _Power = 0;
+    // [SerializeField] private float _Threshold = 0;
+    // private float _Power = 0;
 
     // gameobject semprotan
 
     public override void OnPick(){
         base.OnPick();
-        ScenarioManager.Instance.SaveFirstTimeReaction();
+        // ScenarioManager.Instance.SaveFirstTimeReaction();
         _IsActive = true;
     }
 

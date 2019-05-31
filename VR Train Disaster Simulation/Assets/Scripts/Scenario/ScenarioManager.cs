@@ -14,7 +14,7 @@ public class ScenarioManager : MonoBehaviour
 
     [Header("Collider Simulation")]
     [SerializeField] private Collider[] _AllColliderPaluSimulation;
-    [SerializeField] private Collider _ColliderAparSimulation;
+    [SerializeField] private Collider[] _AllColliderAparSimulation;
     [SerializeField] private Collider[] _AllColliderRemSimulation;
 
     [Header("Fire Spot")]
@@ -259,8 +259,16 @@ public class ScenarioManager : MonoBehaviour
                     _AllColliderRemSimulation[i].enabled = false;
                 }
 
+                // disable collider rem
+                for(int i=0; i<_AllColliderRemSimulation.Length; i++){
+                    _AllColliderRemSimulation[i].enabled = false;
+                }
+
                 // disable collider apar
-                _ColliderAparSimulation.enabled = false;
+                for(int i=0; i<_AllColliderAparSimulation.Length; i++){
+                    _AllColliderAparSimulation[i].enabled = false;
+                }
+                // _ColliderAparSimulation.enabled = false;
 
                 break;
 
@@ -272,7 +280,11 @@ public class ScenarioManager : MonoBehaviour
                 }
 
                 // disable collider apar
-                _ColliderAparSimulation.enabled = false;
+                for(int i=0; i<_AllColliderAparSimulation.Length; i++){
+                    _AllColliderAparSimulation[i].enabled = false;
+                }
+
+                // _ColliderAparSimulation.enabled = false;
 
                 break;
         }

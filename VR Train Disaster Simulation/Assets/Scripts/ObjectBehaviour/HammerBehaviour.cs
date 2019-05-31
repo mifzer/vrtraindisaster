@@ -9,7 +9,7 @@ public class HammerBehaviour : ObjectBehaviour
         base.OnPick();
 
         UIManager.Instance.ShowPopUp("Palu telah diambil");
-        ScenarioManager.Instance.SaveFirstTimeReaction();
+        // ScenarioManager.Instance.SaveFirstTimeReaction();
         
     }
 
