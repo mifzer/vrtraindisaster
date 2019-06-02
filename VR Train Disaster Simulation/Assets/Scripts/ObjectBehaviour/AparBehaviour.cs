@@ -6,7 +6,7 @@ public class AparBehaviour : ObjectBehaviour
 {
     
     // [SerializeField] private ScenarioData _ScenarioData;
-    private bool _IsActive = false;
+    [SerializeField] private bool _IsActive = false;
     // [SerializeField] private float _Threshold = 0;
     // private float _Power = 0;
 

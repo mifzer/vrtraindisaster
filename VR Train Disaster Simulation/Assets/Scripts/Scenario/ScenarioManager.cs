@@ -16,6 +16,7 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private Collider[] _AllColliderPaluSimulation;
     [SerializeField] private Collider[] _AllColliderAparSimulation;
     [SerializeField] private Collider[] _AllColliderRemSimulation;
+    [SerializeField] private Collider[] _AllColliderKeluarBordes;
 
     [Header("Fire Spot")]
     [SerializeField] private GameObject _Center;
@@ -27,7 +28,6 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private string _FinishTime;
 
     [SerializeField] private float _TimeLimit;
-
 
     void Awake(){
         Instance = this;
@@ -161,11 +161,17 @@ public class ScenarioManager : MonoBehaviour
         FindErrorRate();
 
         // send data
-        StartCoroutine(PostToForm());
+        // StartCoroutine(PostToForm());
 
         // load scene
         // StartCoroutine(DelayLoadScene());
     }
+
+#region SAVE DATA
+
+
+
+#endregion
 
 #region SEND DATA
 
@@ -235,8 +241,8 @@ public class ScenarioManager : MonoBehaviour
 
         switch(_ScenarioData.SimulationTypeOf){
             
-            case SimulationType.A:
-                break;
+            // case SimulationType.A:
+            //     break;
             
             case SimulationType.B:
 
@@ -250,14 +256,14 @@ public class ScenarioManager : MonoBehaviour
                     _AllColliderRemSimulation[i].enabled = false;
                 }
 
+                // disable collider keluar bordes
+                for(int i=0; i<_AllColliderKeluarBordes.Length; i++){
+                    _AllColliderKeluarBordes[i].enabled = false;
+                }
+
                 break;
 
             case SimulationType.C:
-                
-                // disable collider rem
-                for(int i=0; i<_AllColliderRemSimulation.Length; i++){
-                    _AllColliderRemSimulation[i].enabled = false;
-                }
 
                 // disable collider rem
                 for(int i=0; i<_AllColliderRemSimulation.Length; i++){
@@ -268,7 +274,11 @@ public class ScenarioManager : MonoBehaviour
                 for(int i=0; i<_AllColliderAparSimulation.Length; i++){
                     _AllColliderAparSimulation[i].enabled = false;
                 }
-                // _ColliderAparSimulation.enabled = false;
+                
+                // disable collider keluar bordes
+                for(int i=0; i<_AllColliderKeluarBordes.Length; i++){
+                    _AllColliderKeluarBordes[i].enabled = false;
+                }
 
                 break;
 
@@ -284,7 +294,10 @@ public class ScenarioManager : MonoBehaviour
                     _AllColliderAparSimulation[i].enabled = false;
                 }
 
-                // _ColliderAparSimulation.enabled = false;
+                // disable collider keluar bordes
+                for(int i=0; i<_AllColliderKeluarBordes.Length; i++){
+                    _AllColliderKeluarBordes[i].enabled = false;
+                }
 
                 break;
         }
