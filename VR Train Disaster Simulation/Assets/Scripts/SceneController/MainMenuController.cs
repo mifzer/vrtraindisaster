@@ -43,9 +43,9 @@ public class MainMenuController : MonoBehaviour
 
     }
 
-    public void InputName(TMPro.TMP_InputField inputfield){
-        _ScenarioData.Name = inputfield.text;
-    }
+    // public void InputName(TMPro.TMP_InputField inputfield){
+    //     _ScenarioData.Name = inputfield.text;
+    // }
 
 #region Scenario
 
@@ -68,6 +68,10 @@ public class MainMenuController : MonoBehaviour
 #endregion
 
     public void StartScenario(){
+
+        // add name data
+        _ScenarioData.Name = _InputFieldName.text;
+
         StartCoroutine(DelayScene());
     }
 

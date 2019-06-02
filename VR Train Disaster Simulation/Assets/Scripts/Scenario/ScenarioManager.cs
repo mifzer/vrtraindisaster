@@ -175,7 +175,8 @@ public class ScenarioManager : MonoBehaviour
     void SaveData(){
         SavedDataScenario saveData = new SavedDataScenario();
 
-        saveData.Name = PlayerPrefs.GetInt("Player").ToString();
+        // saveData.Name = PlayerPrefs.GetInt("Player").ToString();
+        saveData.Name = _ScenarioData.Name;
         saveData.StartPos = _ScenarioData.ChairPosition.ToString();
         saveData.Simulation = _ScenarioData.SimulationTypeOf.ToString();
         saveData.FirePos = _ScenarioData.FirePosition.ToString();
