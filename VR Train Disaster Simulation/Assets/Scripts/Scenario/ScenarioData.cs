@@ -30,6 +30,23 @@ public class ErrorEquation{
     public int CorrectStep; 
 }
 
+public class SavedDataScenario{
+    public string Name;
+    public string StartPos;
+    public string Simulation;
+    public string FirePos;
+    public string UrutanScenario;
+    public string FinishStatus;
+    public string ReactionTime;
+    public string CompleteTime;
+    public string ErrorRate;
+    public string CounterStep;
+    public string CorrectStep;
+    public string StartingTime;
+    public string FinishTime;
+
+}
+
 [CreateAssetMenu(fileName = "CurrentScenarioData", menuName = "Scenario Data/CurrentScenarioData")]
 public class ScenarioData : ScriptableObject
 {

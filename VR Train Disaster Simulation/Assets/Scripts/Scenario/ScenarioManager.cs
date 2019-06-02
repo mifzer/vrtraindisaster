@@ -165,11 +165,36 @@ public class ScenarioManager : MonoBehaviour
 
         // load scene
         // StartCoroutine(DelayLoadScene());
+
+        // saved data
+        SaveData();
     }
 
 #region SAVE DATA
 
+    void SaveData(){
+        SavedDataScenario saveData = new SavedDataScenario();
 
+        saveData.Name = PlayerPrefs.GetInt("Player").ToString();
+        saveData.StartPos = _ScenarioData.ChairPosition.ToString();
+        saveData.Simulation = _ScenarioData.SimulationTypeOf.ToString();
+        saveData.FirePos = _ScenarioData.FirePosition.ToString();
+        saveData.UrutanScenario = _ScenarioData.ChairPosition + _ScenarioData.SimulationTypeOf.ToString() + _ScenarioData.FirePosition.ToString();
+        saveData.FinishStatus = FinishState.ToString();
+        saveData.ReactionTime = _ScenarioData.FirstTimeReaction;
+        saveData.CompleteTime = _ScenarioData.CompletationTimeReaction;
+        saveData.ErrorRate = _ScenarioData.ErrorRate;
+        saveData.CounterStep = CounterStep.ToString();
+        saveData.CorrectStep = CorrectStep(_ScenarioData.ChairPosition + _ScenarioData.SimulationTypeOf.ToString() + _ScenarioData.FirePosition.ToString()).ToString();
+        saveData.StartingTime = _StartingTime;
+        saveData.FinishTime = _FinishTime;
+
+        string temp = JsonUtility.ToJson(saveData);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + System.DateTime.Now.ToString() + ".json", temp);
+
+        UIManager.Instance.ShowPopUp("Data Saved!");
+        StartCoroutine(DelayLoadScene());
+    }
 
 #endregion
 

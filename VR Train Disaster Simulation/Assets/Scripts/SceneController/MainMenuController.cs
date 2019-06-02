@@ -15,6 +15,8 @@ public class MainMenuController : MonoBehaviour
     // [SerializeField] private ScreenFade _ScreenFade;
     [SerializeField] private OVRScreenFade _ScreenFade;
 
+    [Header("Menu")]
+    [SerializeField] private TMPro.TMP_InputField _InputFieldName;
    
     public void ShowMenu(GameObject mymenu){
         
@@ -74,6 +76,18 @@ public class MainMenuController : MonoBehaviour
         _ScreenFade.FadeOut();
         yield return new WaitForSeconds(2);
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+    }
+
+    public void AddChar(string character){
+        _InputFieldName.text = _InputFieldName.text + character;
+    }
+
+    public void AddSpace(){
+        _InputFieldName.text = _InputFieldName.text + " ";
+    }
+
+    public void RemoveCharacter(){
+        _InputFieldName.text = _InputFieldName.text.Remove(_InputFieldName.text.Length);
     }
 
 }
