@@ -18,11 +18,12 @@ public class AparBehaviour : ObjectBehaviour
         _IsActive = true;
     }
 
-    public void FireHandler(){
+    public void FireHandler(GameObject fire){
 
         if(_IsActive == false)
             return;
         
+        fire.SetActive(false);
         ScenarioManager.Instance.FinishScenario();
     }
 
