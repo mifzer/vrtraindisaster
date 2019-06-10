@@ -15,6 +15,8 @@ public class AparBehaviour : ObjectBehaviour
     public override void OnPick(){
         base.OnPick();
         // ScenarioManager.Instance.SaveFirstTimeReaction();
+        PickObject.eulerAngles = new Vector3(0,-90,0);
+        
         UIManager.Instance.ShowPopUp("Apar telah diambil");
         _IsActive = true;
     }

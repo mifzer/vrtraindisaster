@@ -191,7 +191,7 @@ public class ScenarioManager : MonoBehaviour
         saveData.FinishTime = _FinishTime;
 
         string temp = JsonUtility.ToJson(saveData);
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + System.DateTime.Now.ToLongTimeString() + ".json", temp);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + PlayerPrefs.GetInt("Player").ToString() + " " + System.DateTime.Now.ToLongTimeString() + ".json", temp);
 
         UIManager.Instance.ShowPopUp("Data Saved!");
         StartCoroutine(DelayLoadScene());
