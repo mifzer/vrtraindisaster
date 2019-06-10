@@ -91,7 +91,7 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void RemoveCharacter(){
-        _InputFieldName.text = _InputFieldName.text.Remove(_InputFieldName.text.Length);
+        _InputFieldName.text = _InputFieldName.text.Remove(_InputFieldName.text.Length - 1);
     }
 
 }

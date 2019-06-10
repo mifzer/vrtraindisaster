@@ -43,10 +43,10 @@ public class ScenarioManager : MonoBehaviour
             StartCoroutine(DelayLoadScene());
         }
 
-        if(Input.GetKeyDown(KeyCode.Space)){
-            // StartCoroutine(PostToForm());
-            FinishScenario();
-        }
+        // if(Input.GetKeyDown(KeyCode.Space)){
+        //     // StartCoroutine(PostToForm());
+        //     FinishScenario();
+        // }
     }
 
     int _PlayerNumber = 0;
@@ -191,7 +191,7 @@ public class ScenarioManager : MonoBehaviour
         saveData.FinishTime = _FinishTime;
 
         string temp = JsonUtility.ToJson(saveData);
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + PlayerPrefs.GetInt("Player").ToString() + " " + System.DateTime.Now.ToLongTimeString() + ".json", temp);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + PlayerPrefs.GetInt("Player").ToString() + "_" + _ScenarioData.Name + ".json", temp);
 
         UIManager.Instance.ShowPopUp("Data Saved!");
         StartCoroutine(DelayLoadScene());
@@ -254,9 +254,11 @@ public class ScenarioManager : MonoBehaviour
     void EnableFireSpot(){
 
         if(_ScenarioData.FirePosition == FireSpot.A){
+            Debug.LogWarning("fire bordes");
             _Bordes.SetActive(true);
             _Center.SetActive(false);
         }else{
+            Debug.LogWarning("fire center");
             _Bordes.SetActive(false);
             _Center.SetActive(true);
         }
