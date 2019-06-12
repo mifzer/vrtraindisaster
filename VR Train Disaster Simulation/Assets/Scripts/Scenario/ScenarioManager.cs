@@ -43,13 +43,13 @@ public class ScenarioManager : MonoBehaviour
             StartCoroutine(DelayLoadScene());
         }
 
-        // if(Input.GetKeyDown(KeyCode.Space)){
-        //     // StartCoroutine(PostToForm());
-        //     FinishScenario();
-        // }
+        if(Input.GetKeyDown(KeyCode.Q)){
+            // StartCoroutine(PostToForm());
+            FinishScenario();
+        }
     }
 
-    int _PlayerNumber = 0;
+    [SerializeField] private int _PlayerNumber;
 
     void Initialize(){
         _StartingTime = System.DateTime.Now.ToString();
@@ -62,11 +62,11 @@ public class ScenarioManager : MonoBehaviour
 
         StartTimer();
 
-        if(PlayerPrefs.HasKey("Player")){
+        if(!PlayerPrefs.HasKey("Player")){
             PlayerPrefs.SetInt("Player",1);
         }else{
             _PlayerNumber = PlayerPrefs.GetInt("Player");
-            PlayerPrefs.SetInt("Player", _PlayerNumber++);
+            // PlayerPrefs.SetInt("Player", _PlayerNumber +=1 );
         }
     }
 
@@ -190,8 +190,14 @@ public class ScenarioManager : MonoBehaviour
         saveData.StartingTime = _StartingTime;
         saveData.FinishTime = _FinishTime;
 
+        // for naming
+        _PlayerNumber += 1;
+
         string temp = JsonUtility.ToJson(saveData);
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + PlayerPrefs.GetInt("Player").ToString() + "_" + _ScenarioData.Name + ".json", temp);
+        System.IO.File.WriteAllText(Application.persistentDataPath + "/" + _PlayerNumber.ToString() + "_" + _ScenarioData.Name + ".json", temp);
+
+        // save
+        PlayerPrefs.SetInt("Player", _PlayerNumber);
 
         UIManager.Instance.ShowPopUp("Data Saved!");
         StartCoroutine(DelayLoadScene());
