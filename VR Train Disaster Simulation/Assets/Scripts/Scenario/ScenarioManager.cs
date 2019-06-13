@@ -43,10 +43,10 @@ public class ScenarioManager : MonoBehaviour
             StartCoroutine(DelayLoadScene());
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)){
-            // StartCoroutine(PostToForm());
-            FinishScenario();
-        }
+        // if(Input.GetKeyDown(KeyCode.Q)){
+        //     // StartCoroutine(PostToForm());
+        //     FinishScenario();
+        // }
     }
 
     [SerializeField] private int _PlayerNumber;

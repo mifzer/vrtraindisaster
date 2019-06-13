@@ -18,6 +18,36 @@ public class MainMenuController : MonoBehaviour
     [Header("Menu")]
     [SerializeField] private TMPro.TMP_InputField _InputFieldName;
    
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start(){
+        ResetData();
+    }
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    // void Update()
+    // {
+    //     if(Input.GetKeyDown(KeyCode.A)){
+    //         SelectFireSpot("A");
+    //         StartScenario();
+    //     }    
+
+    //     if(Input.GetKeyDown(KeyCode.B)){
+    //         SelectFireSpot("B");
+    //         StartScenario();
+    //     }
+    // }
+
+    void ResetData(){
+        SelectFireSpot("A");
+        SelectPosition("A");
+        SelectSimulation("A");
+    }
+
     public void ShowMenu(GameObject mymenu){
         
         // setup
