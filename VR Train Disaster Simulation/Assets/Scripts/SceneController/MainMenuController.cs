@@ -43,9 +43,16 @@ public class MainMenuController : MonoBehaviour
     // }
 
     void ResetData(){
-        SelectFireSpot("A");
+
+        _ScenarioData.Name = "";
         SelectPosition("A");
         SelectSimulation("A");
+        SelectFireSpot("A");
+
+        _ScenarioData.FirstTimeReaction = "";
+        _ScenarioData.CompletationTimeReaction = "";
+        _ScenarioData.ErrorRate = "";
+
     }
 
     public void ShowMenu(GameObject mymenu){
