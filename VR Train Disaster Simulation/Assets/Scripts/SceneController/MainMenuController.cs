@@ -18,6 +18,9 @@ public class MainMenuController : MonoBehaviour
     [Header("Menu")]
     [SerializeField] private TMPro.TMP_InputField _InputFieldName;
    
+    [Header("Scenario Status")]
+    [SerializeField] private TMPro.TextMeshProUGUI _ScenarioText;
+
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
     /// any of the Update methods is called the first time.
@@ -100,6 +103,36 @@ public class MainMenuController : MonoBehaviour
     public void SelectFireSpot(string key){
         FireSpot mykey = (FireSpot) System.Enum.Parse(typeof(FireSpot), key);
         _ScenarioData.FirePosition = mykey;
+    }
+
+    public void ShowStatusScenario(){
+
+        switch(_ScenarioData.SimulationTypeOf){
+            
+            // free trial
+            case SimulationType.A:
+                 _ScenarioText.text = "----------";
+                break;
+
+            // apar
+            case SimulationType.B:
+                _ScenarioText.text = "PEMADAM KEBAKARAN";
+                break;
+
+            // palu
+            case SimulationType.C:
+                _ScenarioText.text = "PALU DARURAT";
+                break;
+
+            // rem
+            case SimulationType.D:
+                _ScenarioText.text = "REM TANGAN";
+                break;
+
+        }
+
+        // scenario
+        _ScenarioText.text = _ScenarioData.SimulationTypeOf.ToString();
     }
 
 #endregion
