@@ -8,6 +8,12 @@ public class AparBehaviour : ObjectBehaviour
     
     // [SerializeField] private ScenarioData _ScenarioData;
     [SerializeField] private bool _IsActive = false;
+    [SerializeField] private GameObject _Smoke;
+    [SerializeField] private AudioSource _AparSound;
+
+    [SerializeField] private float _FireLimitTime;
+    private float _FireExtinguisherPower = 0;
+
     // [Header("Fire Material")]
     // [SerializeField] private Material[] _MyFire;
 
@@ -30,27 +36,55 @@ public class AparBehaviour : ObjectBehaviour
     /// </summary>
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            // StartCoroutine(PostToForm());
-            FireHandler(null);
+        // if(Input.GetKeyDown(KeyCode.Space)){
+        //     // StartCoroutine(PostToForm());
+        //     FireHandler(null);
+        // }
+
+        if(_IsActive){
+            
+            if(OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)){
+                _AparSound.Play();
+                _Smoke.SetActive(true);
+
+                _FireExtinguisherPower += Time.deltaTime;
+            }
+
+            if(OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger)){
+                _AparSound.Stop();
+                _Smoke.SetActive(false);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Space)){
+                _AparSound.Play();
+                _Smoke.SetActive(true);
+
+                _FireExtinguisherPower += Time.deltaTime;
+            }
+
+            if(Input.GetKeyUp(KeyCode.Space)){
+                _AparSound.Stop();
+                _Smoke.SetActive(false);
+            }
+
         }
+        
     }
 
     public void FireHandler(GameObject fire){
 
         if(_IsActive == false)
             return;
-        
-        // for(int i=0; i<_MyFire.Length; i++){
-        //     _MyFire[0].DOFade(0,0.3f);
-        // }
 
-        UIManager.Instance.ShowPopUp("Api telah padam");
-        
-        if(fire != null)
-            fire.SetActive(false);
+        if(_FireExtinguisherPower >= _FireLimitTime){
+            UIManager.Instance.ShowPopUp("Api telah padam");
             
-        ScenarioManager.Instance.FinishScenario();
+            if(fire != null)
+                fire.SetActive(false);
+                
+            ScenarioManager.Instance.FinishScenario();
+        }
+
     }
 
 
