@@ -8,6 +8,9 @@ public class WindowBehaviour : MonoBehaviour
     private bool _IsTriggered = false;
     private int _KnockCounter = 0;
 
+    [Header("Cracked Window")]
+    [SerializeField] private GameObject _CrackedWindow;
+
     [Header("Audio")]
     [SerializeField] private AudioSource _CrackAudio;
     [SerializeField] private AudioSource _KnockAudio;
@@ -41,6 +44,11 @@ public class WindowBehaviour : MonoBehaviour
 
             if(_KnockCounter == 5){
                 
+                // false the collider
+                GetComponent<BoxCollider>().enabled = false;
+
+                _CrackedWindow.SetActive(true);
+
                 _CrackAudio.Play();
 
                 // show pop up
