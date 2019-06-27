@@ -77,11 +77,11 @@ public class AparBehaviour : ObjectBehaviour
             return;
 
         if(_FireExtinguisherPower >= _FireLimitTime){
-            UIManager.Instance.ShowPopUp("Api telah padam");
             
             if(fire != null)
                 fire.SetActive(false);
                 
+            UIManager.Instance.ShowPopUp("Api telah padam");
             ScenarioManager.Instance.FinishScenario();
         }
 
