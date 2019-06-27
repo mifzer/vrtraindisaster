@@ -132,7 +132,7 @@ public class MainMenuController : MonoBehaviour
         }
 
         // scenario
-        _ScenarioText.text = _ScenarioData.SimulationTypeOf.ToString();
+        // _ScenarioText.text = _ScenarioData.SimulationTypeOf.ToString();
     }
 
 #endregion
