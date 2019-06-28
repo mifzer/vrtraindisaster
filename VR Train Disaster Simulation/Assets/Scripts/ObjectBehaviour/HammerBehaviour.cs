@@ -5,6 +5,7 @@ using UnityEngine;
 public class HammerBehaviour : ObjectBehaviour
 {
 
+    [ContextMenu("ambil palu")]
     public override void OnPick(){
         base.OnPick();
 
