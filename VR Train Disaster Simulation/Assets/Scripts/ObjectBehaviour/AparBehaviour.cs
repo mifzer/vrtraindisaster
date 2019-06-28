@@ -12,8 +12,8 @@ public class AparBehaviour : ObjectBehaviour
     [SerializeField] private AudioSource _AparSound;
 
     [SerializeField] private float _FireLimitTime;
-    private float _FireExtinguisherPower = 0;
-
+    [SerializeField] private float _FireExtinguisherPower = 0;
+    [SerializeField] private GameObject[] _Fire;
     // [Header("Fire Material")]
     // [SerializeField] private Material[] _MyFire;
 
@@ -22,28 +22,34 @@ public class AparBehaviour : ObjectBehaviour
 
     // gameobject semprotan
 
+    [ContextMenu("ambil apar")]
     public override void OnPick(){
         base.OnPick();
-        // ScenarioManager.Instance.SaveFirstTimeReaction();
-        PickObject.eulerAngles = new Vector3(0,90,0);
         
+        PickObject.eulerAngles = new Vector3(0,90,0);
         UIManager.Instance.ShowPopUp("Apar telah diambil");
-        _IsActive = true;
+        // _IsActive = true;
     }
 
-    /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
-    /// </summary>
     void Update()
     {
-        // if(Input.GetKeyDown(KeyCode.Space)){
-        //     // StartCoroutine(PostToForm());
-        //     FireHandler(null);
-        // }
+
 
         if(_IsActive){
             
-            if(OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)){
+            if(_FireExtinguisherPower >= _FireLimitTime){
+                
+                for(int i = 0; i<_Fire.Length; i++){
+                    _Fire[i].SetActive(false);
+                }
+                    
+                UIManager.Instance.ShowPopUp("Api telah padam");
+                ScenarioManager.Instance.FinishScenario();
+
+                _IsActive = false;
+            }
+            
+            if(OVRInput.Get(OVRInput.RawButton.RIndexTrigger)){
                 _AparSound.Play();
                 _Smoke.SetActive(true);
 
@@ -55,7 +61,7 @@ public class AparBehaviour : ObjectBehaviour
                 _Smoke.SetActive(false);
             }
 
-            if(Input.GetKeyDown(KeyCode.Space)){
+            if(Input.GetKey(KeyCode.Space)){
                 _AparSound.Play();
                 _Smoke.SetActive(true);
 
@@ -73,6 +79,8 @@ public class AparBehaviour : ObjectBehaviour
 
     public void FireHandler(GameObject fire){
 
+        Debug.Log("pointer enter");
+
         if(_IsActive == false)
             return;
 
@@ -83,46 +91,33 @@ public class AparBehaviour : ObjectBehaviour
                 
             UIManager.Instance.ShowPopUp("Api telah padam");
             ScenarioManager.Instance.FinishScenario();
+
+            _IsActive = false;
         }
 
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("fire")){
+            _IsActive = true;
+        }
+    }
 
-    // // Update is called once per frame
-    // void Update(){
+    void OnTriggerExit(Collider other){
         
-    //     if(_IsActive == false)
-    //         return;
+        if(other.CompareTag("fire")){
+            
+            _IsActive = false;
 
-    //     // if(_Power > _Threshold){
-    //     //     ScenarioManager.Instance.FinishScenario();
-    //     //     return;
-    //     // }
+            if(_AparSound.isPlaying)
+                _AparSound.Stop();
 
-    //     if(_ScenarioData.SimulationTypeOf == SimulationType.APAR && OVRInput.Get(OVRInput.RawButton.Any)){
-    //         // show gameobject
+            // if(_Smoke.activeInHierarchy)
+                _Smoke.SetActive(false);
 
-    //         // _Power += Time.deltaTime;
-    //         ScenarioManager.Instance.FinishScenario();
-    //         _IsActive = false;
-    //     }
+        }
 
-    // }
-
-    // void OnTriggerEnter(Collider other){
-        
-    //     if(other.CompareTag("fire")){
-    //         _IsActive = true;
-    //     }
-
-    // }
-
-    // void OnTriggerExit(Collider other){
-    //     // _IsActive = false;
-    //     // _Power = 0;
-    //     if(other.CompareTag("fire")){
-    //         _IsActive = false;
-    //     }
-    // }
+    }
 
 }
