@@ -1,0 +1,71 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum SimulationType
+{
+    // FREE_TRIAL, APAR, PALU, REM
+    A,B,C,D 
+}
+
+public enum FireSpot
+{
+    // BORDES, CENTER
+    A,B
+}
+
+public enum FinishSimulation
+{
+    FAIL, FINISH
+}
+
+public enum Startpos{
+    A,B,C
+}
+
+[System.Serializable]
+public class ErrorEquation{
+    public string Key;
+    public int SimulationNumber;
+    public int CorrectStep; 
+}
+
+public class SavedDataScenario{
+    public string Name;
+    public string StartPos;
+    public string Simulation;
+    public string FirePos;
+    public string UrutanScenario;
+    public string FinishStatus;
+    public string ReactionTime;
+    public string CompleteTime;
+    public string ErrorRate;
+    public string CounterStep;
+    public string CorrectStep;
+    public string StartingTime;
+    public string FinishTime;
+
+}
+
+[CreateAssetMenu(fileName = "CurrentScenarioData", menuName = "Scenario Data/CurrentScenarioData")]
+public class ScenarioData : ScriptableObject
+{
+    [Header("Biodata")]
+    public string Name;
+
+    [Header("Scenario")]
+    public Startpos ChairPosition;
+    public SimulationType SimulationTypeOf;
+    public FireSpot FirePosition;
+
+    [Header("Time")]
+    public string FirstTimeReaction;
+    public string CompletationTimeReaction;
+    public string TimeDate;
+
+    [Header("Error Equation")]
+    public string ErrorRate;
+    public ErrorEquation[] AllListSimulationCorrectStep;
+
+    
+}
